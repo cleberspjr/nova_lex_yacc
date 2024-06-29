@@ -1,0 +1,5 @@
+    flex lexer.l
+    yacc -d parser.y
+    gcc -c lex.yy.c y.tab.c
+    gcc -o exemplo lex.yy.o y.tab.o -lfl
+    ./exemplo
