@@ -102,9 +102,12 @@ Maintained by Magnus Ekdahl <magnus@debian.org>
 
 int yylex(void);
 void yyerror(char* s);
-#include <stdlib.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
+
+// Declaração da variável yyin para o Flex/Bison
+extern FILE *yyin;
 
 typedef struct node {
     char id[10];
@@ -145,7 +148,7 @@ char* remove_quotes(char* str) {
     return new_str;
 }
 
-#line 48 "parser.y"
+#line 51 "parser.y"
 typedef union {
     int number;
     char *string;
@@ -586,9 +589,9 @@ static const short yyrhs[] = {    19,
 
 #if (YY_parse_DEBUG != 0) || defined(YY_parse_ERROR_VERBOSE) 
 static const short yyrline[] = { 0,
-    59,    61,    64,    69,    73,    76,    78,    79,    80,    83,
-    87,    92,    97,   101,   106,   112,   116,   120,   125,   133,
-   146,   159,   200,   223,   268,   283
+    62,    64,    67,    72,    76,    79,    81,    82,    83,    86,
+    90,    95,   100,   104,   109,   115,   119,   123,   128,   136,
+   149,   162,   203,   226,   271,   286
 };
 
 static const char * const yytname[] = {   "$","error","$illegal.","NUMBER","IDENT",
@@ -1150,47 +1153,47 @@ YYLABEL(yyreduce)
   switch (yyn) {
 
 case 3:
-#line 65 "parser.y"
+#line 68 "parser.y"
 {
         printf("Entering block: %s\n", yyvsp[0].string);
         push_symbol_table(yyvsp[0].string);
     ;
     break;}
 case 4:
-#line 69 "parser.y"
+#line 72 "parser.y"
 {
         printf("Exiting block: %s\n", yyvsp[0].string);
         pop_symbol_table(yyvsp[0].string);
     ;
     break;}
 case 10:
-#line 84 "parser.y"
-{
-        // Declaração de múltiplos identificadores
-    ;
-    break;}
-case 11:
 #line 87 "parser.y"
 {
         // Declaração de múltiplos identificadores
     ;
     break;}
+case 11:
+#line 90 "parser.y"
+{
+        // Declaração de múltiplos identificadores
+    ;
+    break;}
 case 12:
-#line 93 "parser.y"
+#line 96 "parser.y"
 {
         insertint(escope_stack->symbol_table, yyvsp[0].string, 0);
         printf("Declaration: %s\n", yyvsp[0].string);
     ;
     break;}
 case 13:
-#line 97 "parser.y"
+#line 100 "parser.y"
 {
         insertint(escope_stack->symbol_table, yyvsp[-2].string, yyvsp[0].number);
         printf("Declaration: %s = %d\n", yyvsp[-2].string, yyvsp[0].number);
     ;
     break;}
 case 14:
-#line 101 "parser.y"
+#line 104 "parser.y"
 {
         int result = yyvsp[-2].number + yyvsp[0].number;
         insertint(escope_stack->symbol_table, yyvsp[-4].string, result);
@@ -1198,7 +1201,7 @@ case 14:
     ;
     break;}
 case 15:
-#line 106 "parser.y"
+#line 109 "parser.y"
 {
         char *str_val = remove_quotes(yyvsp[0].string);
         insertstr(escope_stack->symbol_table, yyvsp[-2].string, str_val);
@@ -1207,21 +1210,21 @@ case 15:
     ;
     break;}
 case 16:
-#line 112 "parser.y"
+#line 115 "parser.y"
 {
         insertint(escope_stack->symbol_table, yyvsp[-2].string, 0);
         printf("Declaration: %s\n", yyvsp[-2].string);
     ;
     break;}
 case 17:
-#line 116 "parser.y"
+#line 119 "parser.y"
 {
         insertint(escope_stack->symbol_table, yyvsp[-4].string, yyvsp[-2].number);
         printf("Declaration: %s = %d\n", yyvsp[-4].string, yyvsp[-2].number);
     ;
     break;}
 case 18:
-#line 120 "parser.y"
+#line 123 "parser.y"
 {
         int result = yyvsp[-4].number + yyvsp[-2].number;
         insertint(escope_stack->symbol_table, yyvsp[-6].string, result);
@@ -1229,7 +1232,7 @@ case 18:
     ;
     break;}
 case 19:
-#line 125 "parser.y"
+#line 128 "parser.y"
 {
         char *str_val = remove_quotes(yyvsp[-2].string);
         insertstr(escope_stack->symbol_table, yyvsp[-4].string, str_val);
@@ -1238,7 +1241,7 @@ case 19:
     ;
     break;}
 case 20:
-#line 134 "parser.y"
+#line 137 "parser.y"
 {
         node_t* found_node = get_node_from_stack(yyvsp[-3].string);
         if (found_node == NULL) {
@@ -1253,7 +1256,7 @@ case 20:
     ;
     break;}
 case 21:
-#line 146 "parser.y"
+#line 149 "parser.y"
 {
         node_t* found_node = get_node_from_stack(yyvsp[-5].string);
         int result = yyvsp[-3].number + yyvsp[-1].number;
@@ -1269,7 +1272,7 @@ case 21:
     ;
     break;}
 case 22:
-#line 159 "parser.y"
+#line 162 "parser.y"
 {
         node_t* found_node1 = get_node_from_stack(yyvsp[-3].string);
         node_t* found_node2 = get_node_from_stack(yyvsp[-1].string);
@@ -1313,7 +1316,7 @@ case 22:
     ;
     break;}
 case 23:
-#line 200 "parser.y"
+#line 203 "parser.y"
 {
         node_t* found_node1 = get_node_from_stack(yyvsp[-3].string);
         node_t* found_node_dest = get_node_from_stack(yyvsp[-5].string);
@@ -1339,7 +1342,7 @@ case 23:
     ;
     break;}
 case 24:
-#line 223 "parser.y"
+#line 226 "parser.y"
 {
         node_t* found_node1 = get_node_from_stack(yyvsp[-5].string);
         node_t* found_node2 = get_node_from_stack(yyvsp[-3].string);
@@ -1385,14 +1388,14 @@ case 24:
     ;
     break;}
 case 25:
-#line 269 "parser.y"
+#line 272 "parser.y"
 {
         node_t* found_node = get_node_from_stack(yyvsp[-1].string);
-        if (found_node != NULL) {
+        if (found_node) {
             if (found_node->type == 0) {
-                printf("Print: %s = %d\n", yyvsp[-1].string, found_node->int_val);
+                printf("Value of %s: %d\n", yyvsp[-1].string, found_node->int_val);
             } else {
-                printf("Print: %s = \"%s\"\n", yyvsp[-1].string, found_node->str_val);
+                printf("Value of %s: %s\n", yyvsp[-1].string, found_node->str_val);
             }
         } else {
             printf("Erro: variável não declarada\n");
@@ -1400,11 +1403,15 @@ case 25:
     ;
     break;}
 case 26:
-#line 284 "parser.y"
+#line 287 "parser.y"
 {
-        node_t* deleted_node = delete_node(escope_stack->symbol_table, yyvsp[-1].string);
-        if (deleted_node != NULL) {
-            printf("Delete: %s\n", yyvsp[-1].string);
+        node_t* node = delete_node(escope_stack->symbol_table, yyvsp[-1].string);
+        if (node) {
+            printf("Deleted %s\n", yyvsp[-1].string);
+            if (node->type == 1) {
+                free(node->str_val);
+            }
+            free(node);
         } else {
             printf("Erro: variável não declarada\n");
         }
@@ -1614,117 +1621,121 @@ YYLABEL(yyerrhandle)
 /* END */
 
  #line 1038 "/usr/share/bison++/bison.cc"
-#line 293 "parser.y"
+#line 301 "parser.y"
 
 
-int main(void) {
+int main(int argc, char **argv) {
+    ++argv, --argc;
+    if (argc > 0) {
+        FILE *file = fopen(argv[0], "r");
+        if (!file) {
+            fprintf(stderr, "Could not open %s\n", argv[0]);
+            return 1;
+        }
+        yyin = file;
+    }
     return yyparse();
 }
 
+void yyerror(char* s) {
+    fprintf(stderr, "Error: %s\n", s);
+}
+
 void push_symbol_table(char* name) {
-    symbol_table_t *new_symbol_table = (symbol_table_t *)malloc(sizeof(symbol_table_t));
-    new_symbol_table->symbols = NULL;
-    new_symbol_table->next = NULL;
-
-    escope_t *new_escope = (escope_t *)malloc(sizeof(escope_t));
-    new_escope->symbol_table = new_symbol_table;
-    new_escope->next = escope_stack;
+    escope_t* new_escope = (escope_t*)malloc(sizeof(escope_t));
+    new_escope->symbol_table = (symbol_table_t*)malloc(sizeof(symbol_table_t));
+    new_escope->symbol_table->symbols = NULL;
+    new_escope->symbol_table->next = NULL;
     new_escope->name = strdup(name);
-
+    new_escope->next = escope_stack;
     escope_stack = new_escope;
-
-    // Copiar os símbolos do escopo anterior para o novo escopo
-    if (escope_stack->next != NULL) {
-        symbol_table_t *prev_symbol_table = escope_stack->next->symbol_table;
-        node_t *current_node = prev_symbol_table->symbols;
-        while (current_node != NULL) {
-            if (current_node->type == 0) {
-                insertint(escope_stack->symbol_table, current_node->id, current_node->int_val);
-            } else {
-                insertstr(escope_stack->symbol_table, current_node->id, current_node->str_val);
-            }
-            current_node = current_node->next;
-        }
-    }
 }
 
 void pop_symbol_table(char* name) {
     if (escope_stack != NULL) {
-        escope_t *top = escope_stack;
-        if (strcmp(top->name, name) == 0) {
-            escope_stack = top->next;
-            free(top->symbol_table);
-            free(top->name);
-            free(top);
-        } else {
-            printf("Erro: nome do escopo não corresponde\n");
+        escope_t* top = escope_stack;
+        escope_stack = escope_stack->next;
+
+        // Libera a tabela de símbolos
+        node_t* current = top->symbol_table->symbols;
+        while (current != NULL) {
+            node_t* temp = current;
+            current = current->next;
+            if (temp->type == 1) {
+                free(temp->str_val);
+            }
+            free(temp);
         }
-    } else {
-        printf("Erro: stack de escopo vazia\n");
+        free(top->symbol_table);
+        free(top->name);
+        free(top);
     }
 }
 
 node_t* get_node(symbol_table_t *symbol_table, char *lex) {
-    node_t *current_node = symbol_table->symbols;
-    while (current_node != NULL) {
-        if (strcmp(current_node->id, lex) == 0) {
-            return current_node;
+    node_t* current = symbol_table->symbols;
+    while (current != NULL) {
+        if (strcmp(current->id, lex) == 0) {
+            return current;
         }
-        current_node = current_node->next;
+        current = current->next;
     }
     return NULL;
 }
 
 node_t* get_node_from_stack(char *lex) {
-    escope_t *current_escope = escope_stack;
-    while (current_escope != NULL) {
-        node_t *found_node = get_node(current_escope->symbol_table, lex);
-        if (found_node != NULL) {
-            return found_node;
+    escope_t* current_scope = escope_stack;
+    while (current_scope != NULL) {
+        node_t* node = get_node(current_scope->symbol_table, lex);
+        if (node != NULL) {
+            return node;
         }
-        current_escope = current_escope->next;
+        current_scope = current_scope->next;
     }
     return NULL;
 }
 
 node_t* insertint(symbol_table_t *symbol_table, char *lex, int int_val) {
-    node_t *new_node = (node_t *)malloc(sizeof(node_t));
+    node_t* new_node = (node_t*)malloc(sizeof(node_t));
     strcpy(new_node->id, lex);
     new_node->int_val = int_val;
-    new_node->type = 0;
+    new_node->str_val = NULL;
     new_node->next = symbol_table->symbols;
+    new_node->type = 0;
     symbol_table->symbols = new_node;
     return new_node;
 }
 
 node_t* insertstr(symbol_table_t *symbol_table, char *lex, char *value) {
-    node_t *new_node = (node_t *)malloc(sizeof(node_t));
+    node_t* new_node = (node_t*)malloc(sizeof(node_t));
     strcpy(new_node->id, lex);
+    new_node->int_val = 0;
     new_node->str_val = strdup(value);
-    new_node->type = 1;
     new_node->next = symbol_table->symbols;
+    new_node->type = 1;
     symbol_table->symbols = new_node;
     return new_node;
 }
 
 node_t* delete_node(symbol_table_t *symbol_table, char *lex) {
-    node_t *current_node = symbol_table->symbols;
-    node_t *previous_node = NULL;
-    while (current_node != NULL) {
-        if (strcmp(current_node->id, lex) == 0) {
-            if (previous_node == NULL) {
-                symbol_table->symbols = current_node->next;
-            } else {
-                previous_node->next = current_node->next;
-            }
-            return current_node;
-        }
-        previous_node = current_node;
-        current_node = current_node->next;
-    }
-    return NULL;
-}
+    node_t *current = symbol_table->symbols;
+    node_t *prev = NULL;
 
-void yyerror(char* s) {
-    fprintf(stderr, "Error: %s\n", s);
+    while (current != NULL && strcmp(current->id, lex) != 0) {
+        prev = current;
+        current = current->next;
+    }
+
+    if (current == NULL) {
+        return NULL; // Node not found
+    }
+
+    if (prev == NULL) {
+        // Node is the head of the list
+        symbol_table->symbols = current->next;
+    } else {
+        prev->next = current->next;
+    }
+
+    return current;
 }

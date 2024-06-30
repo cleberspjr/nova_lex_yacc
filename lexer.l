@@ -43,3 +43,6 @@ _[a-zA-Z0-9]+_ {
 .           { printf("Caractere não reconhecido: %s\n", yytext); }
 
 %%
+int yywrap(void) {
+    return 1;
+}

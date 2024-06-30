@@ -1866,4 +1866,6 @@ void yyfree (void * ptr )
 
 #line 45 "lexer.l"
 
-
+int yywrap(void) {
+    return 1;
+}
