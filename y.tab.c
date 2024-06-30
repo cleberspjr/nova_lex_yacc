@@ -524,7 +524,7 @@ YY_parse_CONSTRUCTOR_CODE;
  #line 352 "/usr/share/bison++/bison.cc"
 
 
-#define	YYFINAL		59
+#define	YYFINAL		55
 #define	YYFLAG		-32768
 #define	YYNTBASE	19
 
@@ -565,7 +565,7 @@ static const char yytranslate[] = {     0,
 static const short yyprhs[] = {     0,
      0,     3,     4,     7,    10,    12,    14,    16,    18,    20,
     24,    28,    30,    34,    40,    44,    48,    54,    62,    68,
-    73,    80,    87,    94,   103,   108,   112,   116
+    73,    80,    87,    94,   103,   107
 };
 
 static const short yyrhs[] = {    19,
@@ -579,8 +579,7 @@ static const short yyrhs[] = {    19,
      9,     0,     4,     7,     3,     8,     3,     9,     0,     4,
      7,     4,     8,     4,     9,     0,     4,     7,     4,     8,
      3,     9,     0,     4,     7,     4,     8,     4,     8,     4,
-     9,     0,     4,     7,     6,     9,     0,    10,     4,     9,
-     0,    10,     6,     9,     0,    11,     4,     9,     0
+     9,     0,    10,     4,     9,     0,    11,     4,     9,     0
 };
 
 #endif
@@ -589,7 +588,7 @@ static const short yyrhs[] = {    19,
 static const short yyrline[] = { 0,
     59,    61,    64,    69,    73,    76,    78,    79,    80,    83,
     87,    92,    97,   101,   106,   112,   116,   120,   125,   133,
-   146,   159,   201,   224,   269,   286,   299,   304
+   146,   159,   200,   223,   268,   283
 };
 
 static const char * const yytname[] = {   "$","error","$illegal.","NUMBER","IDENT",
@@ -602,35 +601,35 @@ static const char * const yytname[] = {   "$","error","$illegal.","NUMBER","IDEN
 static const short yyr1[] = {     0,
     19,    19,    20,    20,    20,    21,    21,    21,    21,    22,
     22,    23,    23,    23,    23,    23,    23,    23,    23,    24,
-    24,    24,    24,    24,    24,    25,    25,    26
+    24,    24,    24,    24,    25,    26
 };
 
 static const short yyr2[] = {     0,
      2,     0,     2,     2,     1,     1,     1,     1,     1,     3,
      3,     1,     3,     5,     3,     3,     5,     7,     5,     4,
-     6,     6,     6,     8,     4,     3,     3,     3
+     6,     6,     6,     8,     3,     3
 };
 
 static const short yydefact[] = {     2,
      0,     0,     0,     0,     0,     0,     0,     0,     1,     5,
-     6,     7,     8,     9,     0,     0,     0,     0,     3,     4,
-    12,     0,     0,     0,     0,     0,    26,    27,    28,     0,
-     0,    10,    11,     0,    20,     0,    25,    13,    15,    16,
-     0,     0,     0,     0,     0,     0,    21,    23,     0,    22,
-    14,    17,    19,     0,     0,    24,    18,     0,     0
+     6,     7,     8,     9,     0,     0,     0,     3,     4,    12,
+     0,     0,     0,     0,    25,    26,     0,     0,    10,    11,
+     0,    20,     0,    13,    15,    16,     0,     0,     0,     0,
+     0,     0,    21,    23,     0,    22,    14,    17,    19,     0,
+     0,    24,    18,     0,     0
 };
 
 static const short yydefgoto[] = {     1,
-     9,    10,    11,    22,    12,    13,    14
+     9,    10,    11,    21,    12,    13,    14
 };
 
 static const short yypact[] = {-32768,
-     1,    22,     4,    -1,    23,    25,    27,    27,-32768,-32768,
--32768,-32768,-32768,-32768,     3,    24,    26,    30,-32768,-32768,
-    -5,    31,    32,    12,    28,    33,-32768,-32768,-32768,    16,
-    27,-32768,-32768,    29,-32768,    21,-32768,    -4,    34,-32768,
-    35,    36,    18,    40,    27,    27,-32768,-32768,    42,-32768,
-    37,-32768,-32768,    39,    27,-32768,-32768,    49,-32768
+     1,    12,    21,    22,    23,    24,    26,    26,-32768,-32768,
+-32768,-32768,-32768,-32768,     4,    18,    27,-32768,-32768,    -5,
+    28,    29,    13,    31,-32768,-32768,     0,    26,-32768,-32768,
+    32,-32768,     6,    -4,    14,-32768,    33,    35,    15,    37,
+    26,    26,-32768,-32768,    41,-32768,    30,-32768,-32768,    38,
+    26,-32768,-32768,    46,-32768
 };
 
 static const short yypgoto[] = {-32768,
@@ -638,25 +637,23 @@ static const short yypgoto[] = {-32768,
 };
 
 
-#define	YYLAST		55
+#define	YYLAST		48
 
 
-static const short yytable[] = {    23,
-    58,    30,    18,    44,     2,    24,    25,    16,    26,    17,
-     3,     4,    31,    45,     5,     6,     7,     8,    38,    34,
-    35,    39,    40,    42,    43,    49,    50,    19,    15,    20,
-    21,    41,    27,     0,    28,    36,    52,    53,    29,    32,
-    33,    37,    51,    47,    48,    54,    57,    56,    59,     0,
-     0,    46,     0,     0,    55
+static const short yytable[] = {    22,
+    54,    27,    34,    40,     2,    35,    23,    24,    38,    39,
+     3,     4,    28,    41,     5,     6,     7,     8,    15,    36,
+    31,    32,    45,    46,    16,    17,    25,    18,    19,    20,
+     0,    42,    48,    49,    37,    26,    29,    30,    33,    47,
+     0,    43,    53,    44,    50,    55,    52,    51
 };
 
 static const short yycheck[] = {     8,
-     0,     7,     4,     8,     4,     3,     4,     4,     6,     6,
-    10,    11,    18,    18,    14,    15,    16,    17,     3,     8,
-     9,     6,    31,     3,     4,     8,     9,     5,     7,     5,
-     4,     3,     9,    -1,     9,     8,    45,    46,     9,     9,
-     9,     9,     3,     9,     9,     4,    55,     9,     0,    -1,
-    -1,    18,    -1,    -1,    18
+     0,     7,     3,     8,     4,     6,     3,     4,     3,     4,
+    10,    11,    18,    18,    14,    15,    16,    17,     7,    28,
+     8,     9,     8,     9,     4,     4,     9,     5,     5,     4,
+    -1,    18,    41,    42,     3,     9,     9,     9,     8,     3,
+    -1,     9,    51,     9,     4,     0,     9,    18
 };
 
 #line 352 "/usr/share/bison++/bison.cc"
@@ -1281,9 +1278,8 @@ case 22:
         if (found_node1 && found_node2) {
             if (found_node1->type == found_node2->type) {
                 if (found_node1->type == 1) {
-                    char *result = (char *)malloc(strlen(found_node1->str_val) + strlen(found_node2->str_val) + 2); // +2 para espaço e terminador nulo
+                    char *result = (char *)malloc(strlen(found_node1->str_val) + strlen(found_node2->str_val) + 1); // +1 para terminador nulo
                     strcpy(result, found_node1->str_val);
-                    strcat(result, " ");
                     strcat(result, found_node2->str_val);
                     if (found_node_dest == NULL) {
                         insertstr(escope_stack->symbol_table, yyvsp[-5].string, result);
@@ -1317,7 +1313,7 @@ case 22:
     ;
     break;}
 case 23:
-#line 201 "parser.y"
+#line 200 "parser.y"
 {
         node_t* found_node1 = get_node_from_stack(yyvsp[-3].string);
         node_t* found_node_dest = get_node_from_stack(yyvsp[-5].string);
@@ -1343,7 +1339,7 @@ case 23:
     ;
     break;}
 case 24:
-#line 224 "parser.y"
+#line 223 "parser.y"
 {
         node_t* found_node1 = get_node_from_stack(yyvsp[-5].string);
         node_t* found_node2 = get_node_from_stack(yyvsp[-3].string);
@@ -1353,11 +1349,9 @@ case 24:
         if (found_node1 && found_node2 && found_node3) {
             if (found_node1->type == found_node2->type && found_node2->type == found_node3->type) {
                 if (found_node1->type == 1) {
-                    char *result = (char *)malloc(strlen(found_node1->str_val) + strlen(found_node2->str_val) + strlen(found_node3->str_val) + 3); // +3 para espaços e terminador nulo
+                    char *result = (char *)malloc(strlen(found_node1->str_val) + strlen(found_node2->str_val) + strlen(found_node3->str_val) + 1); // +1 para terminador nulo
                     strcpy(result, found_node1->str_val);
-                    strcat(result, " ");
                     strcat(result, found_node2->str_val);
-                    strcat(result, " ");
                     strcat(result, found_node3->str_val);
                     if (found_node_dest == NULL) {
                         insertstr(escope_stack->symbol_table, yyvsp[-7].string, result);
@@ -1393,47 +1387,27 @@ case 24:
 case 25:
 #line 269 "parser.y"
 {
-        node_t* found_node = get_node_from_stack(yyvsp[-3].string);
-        char *str_val = remove_quotes(yyvsp[-1].string);
-        if (found_node == NULL) {
-            insertstr(escope_stack->symbol_table, yyvsp[-3].string, str_val);
-            printf("Assignment: %s = \"%s\"\n", yyvsp[-3].string, str_val);
-        } else if (found_node->type == 1) {
-            free(found_node->str_val);
-            found_node->str_val = str_val;
-            printf("Assignment: %s = \"%s\"\n", yyvsp[-3].string, str_val);
-        } else {
-            printf("Erro: tipos não compatíveis\n");
-            free(str_val);
-        }
-    ;
-    break;}
-case 26:
-#line 287 "parser.y"
-{
         node_t* found_node = get_node_from_stack(yyvsp[-1].string);
         if (found_node != NULL) {
-            if (found_node->type == 1) {
-                printf("Print: %s = \"%s\"\n", yyvsp[-1].string, found_node->str_val);
-            } else {
+            if (found_node->type == 0) {
                 printf("Print: %s = %d\n", yyvsp[-1].string, found_node->int_val);
+            } else {
+                printf("Print: %s = \"%s\"\n", yyvsp[-1].string, found_node->str_val);
             }
         } else {
             printf("Erro: variável não declarada\n");
         }
     ;
     break;}
-case 27:
-#line 299 "parser.y"
+case 26:
+#line 284 "parser.y"
 {
-        printf("Print: \"%s\"\n", remove_quotes(yyvsp[-1].string));
-    ;
-    break;}
-case 28:
-#line 305 "parser.y"
-{
-        delete_node(escope_stack->symbol_table, yyvsp[-1].string);
-        printf("Deleted: %s\n", yyvsp[-1].string);
+        node_t* deleted_node = delete_node(escope_stack->symbol_table, yyvsp[-1].string);
+        if (deleted_node != NULL) {
+            printf("Delete: %s\n", yyvsp[-1].string);
+        } else {
+            printf("Erro: variável não declarada\n");
+        }
     ;
     break;}
 }
@@ -1640,55 +1614,71 @@ YYLABEL(yyerrhandle)
 /* END */
 
  #line 1038 "/usr/share/bison++/bison.cc"
-#line 311 "parser.y"
+#line 293 "parser.y"
 
+
+int main(void) {
+    return yyparse();
+}
 
 void push_symbol_table(char* name) {
-    symbol_table_t* new_symbol_table = (symbol_table_t*) malloc(sizeof(symbol_table_t));
+    symbol_table_t *new_symbol_table = (symbol_table_t *)malloc(sizeof(symbol_table_t));
     new_symbol_table->symbols = NULL;
     new_symbol_table->next = NULL;
 
-    escope_t* new_escope = (escope_t*) malloc(sizeof(escope_t));
+    escope_t *new_escope = (escope_t *)malloc(sizeof(escope_t));
     new_escope->symbol_table = new_symbol_table;
     new_escope->next = escope_stack;
     new_escope->name = strdup(name);
 
     escope_stack = new_escope;
+
+    // Copiar os símbolos do escopo anterior para o novo escopo
+    if (escope_stack->next != NULL) {
+        symbol_table_t *prev_symbol_table = escope_stack->next->symbol_table;
+        node_t *current_node = prev_symbol_table->symbols;
+        while (current_node != NULL) {
+            if (current_node->type == 0) {
+                insertint(escope_stack->symbol_table, current_node->id, current_node->int_val);
+            } else {
+                insertstr(escope_stack->symbol_table, current_node->id, current_node->str_val);
+            }
+            current_node = current_node->next;
+        }
+    }
 }
 
 void pop_symbol_table(char* name) {
-    escope_t* old_escope = escope_stack;
-    escope_stack = escope_stack->next;
-
-    // Free the old escope's symbol table
-    node_t* current = old_escope->symbol_table->symbols;
-    while (current != NULL) {
-        node_t* temp = current;
-        current = current->next;
-        free(temp->str_val);
-        free(temp);
+    if (escope_stack != NULL) {
+        escope_t *top = escope_stack;
+        if (strcmp(top->name, name) == 0) {
+            escope_stack = top->next;
+            free(top->symbol_table);
+            free(top->name);
+            free(top);
+        } else {
+            printf("Erro: nome do escopo não corresponde\n");
+        }
+    } else {
+        printf("Erro: stack de escopo vazia\n");
     }
-
-    free(old_escope->symbol_table);
-    free(old_escope->name);
-    free(old_escope);
 }
 
 node_t* get_node(symbol_table_t *symbol_table, char *lex) {
-    node_t* current = symbol_table->symbols;
-    while (current != NULL) {
-        if (strcmp(current->id, lex) == 0) {
-            return current;
+    node_t *current_node = symbol_table->symbols;
+    while (current_node != NULL) {
+        if (strcmp(current_node->id, lex) == 0) {
+            return current_node;
         }
-        current = current->next;
+        current_node = current_node->next;
     }
     return NULL;
 }
 
 node_t* get_node_from_stack(char *lex) {
-    escope_t* current_escope = escope_stack;
+    escope_t *current_escope = escope_stack;
     while (current_escope != NULL) {
-        node_t* found_node = get_node(current_escope->symbol_table, lex);
+        node_t *found_node = get_node(current_escope->symbol_table, lex);
         if (found_node != NULL) {
             return found_node;
         }
@@ -1698,77 +1688,43 @@ node_t* get_node_from_stack(char *lex) {
 }
 
 node_t* insertint(symbol_table_t *symbol_table, char *lex, int int_val) {
-    node_t* existing_node = get_node(symbol_table, lex);
-    if (existing_node != NULL) {
-        existing_node->int_val = int_val;
-        existing_node->type = 0;
-        return existing_node;
-    }
-
-    node_t* new_node = (node_t*) malloc(sizeof(node_t));
+    node_t *new_node = (node_t *)malloc(sizeof(node_t));
     strcpy(new_node->id, lex);
     new_node->int_val = int_val;
-    new_node->str_val = NULL;
-    new_node->next = symbol_table->symbols;
     new_node->type = 0;
+    new_node->next = symbol_table->symbols;
     symbol_table->symbols = new_node;
-
     return new_node;
 }
 
 node_t* insertstr(symbol_table_t *symbol_table, char *lex, char *value) {
-    node_t* existing_node = get_node(symbol_table, lex);
-    if (existing_node != NULL) {
-        free(existing_node->str_val);
-        existing_node->str_val = strdup(value);
-        existing_node->type = 1;
-        return existing_node;
-    }
-
-    node_t* new_node = (node_t*) malloc(sizeof(node_t));
+    node_t *new_node = (node_t *)malloc(sizeof(node_t));
     strcpy(new_node->id, lex);
-    new_node->int_val = 0;
     new_node->str_val = strdup(value);
-    new_node->next = symbol_table->symbols;
     new_node->type = 1;
+    new_node->next = symbol_table->symbols;
     symbol_table->symbols = new_node;
-
     return new_node;
 }
 
 node_t* delete_node(symbol_table_t *symbol_table, char *lex) {
-    node_t *current = symbol_table->symbols;
-    node_t *previous = NULL;
-
-    while (current != NULL && strcmp(current->id, lex) != 0) {
-        previous = current;
-        current = current->next;
+    node_t *current_node = symbol_table->symbols;
+    node_t *previous_node = NULL;
+    while (current_node != NULL) {
+        if (strcmp(current_node->id, lex) == 0) {
+            if (previous_node == NULL) {
+                symbol_table->symbols = current_node->next;
+            } else {
+                previous_node->next = current_node->next;
+            }
+            return current_node;
+        }
+        previous_node = current_node;
+        current_node = current_node->next;
     }
-
-    if (current == NULL) {
-        return NULL; // Node not found
-    }
-
-    if (previous == NULL) {
-        symbol_table->symbols = current->next;
-    } else {
-        previous->next = current->next;
-    }
-
-    free(current->str_val);
-    free(current);
-    return current;
-}
-
-int main(int argc, char **argv) {
-    return yyparse();
+    return NULL;
 }
 
 void yyerror(char* s) {
-    fprintf(stderr, "erro: %s\n", s);
-    // Retorna para continuar a execução
-}
-
-int yywrap() {
-    return 1;
+    fprintf(stderr, "Error: %s\n", s);
 }

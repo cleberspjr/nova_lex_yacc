@@ -230,7 +230,7 @@ assign:
         if (found_node1 && found_node2 && found_node3) {
             if (found_node1->type == found_node2->type && found_node2->type == found_node3->type) {
                 if (found_node1->type == 1) {
-                    char *result = (char *)malloc(strlen(found_node1->str_val) + strlen(found_node2->str_val) + strlen(found_node3->str_val) + 3); // +3 para espaços e terminador nulo
+                    char *result = (char *)malloc(strlen(found_node1->str_val) + strlen(found_node2->str_val) + strlen(found_node3->str_val) + 3); // +3 para dois espaços e terminador nulo
                     strcpy(result, found_node1->str_val);
                     strcat(result, " ");
                     strcat(result, found_node2->str_val);
@@ -266,96 +266,97 @@ assign:
             printf("Erro: variável não declarada\n");
         }
     }
-    | IDENT IGUAL STR TERM {
-        node_t* found_node = get_node_from_stack($1);
-        char *str_val = remove_quotes($3);
-        if (found_node == NULL) {
-            insertstr(escope_stack->symbol_table, $1, str_val);
-            printf("Assignment: %s = \"%s\"\n", $1, str_val);
-        } else if (found_node->type == 1) {
-            free(found_node->str_val);
-            found_node->str_val = str_val;
-            printf("Assignment: %s = \"%s\"\n", $1, str_val);
-        } else {
-            printf("Erro: tipos não compatíveis\n");
-            free(str_val);
-        }
-    }
     ;
 
 print:
     PRINT_LC IDENT TERM {
         node_t* found_node = get_node_from_stack($2);
         if (found_node != NULL) {
-            if (found_node->type == 1) {
-                printf("Print: %s = \"%s\"\n", $2, found_node->str_val);
-            } else {
+            if (found_node->type == 0) {
                 printf("Print: %s = %d\n", $2, found_node->int_val);
+            } else {
+                printf("Print: %s = \"%s\"\n", $2, found_node->str_val);
             }
         } else {
             printf("Erro: variável não declarada\n");
         }
     }
-    | PRINT_LC STR TERM {
-        printf("Print: \"%s\"\n", remove_quotes($2));
-    }
     ;
 
 del:
     DEL IDENT TERM {
-        delete_node(escope_stack->symbol_table, $2);
-        printf("Deleted: %s\n", $2);
+        node_t* deleted_node = delete_node(escope_stack->symbol_table, $2);
+        if (deleted_node != NULL) {
+            printf("Delete: %s\n", $2);
+        } else {
+            printf("Erro: variável não declarada\n");
+        }
     }
     ;
-
 %%
 
+int main(void) {
+    return yyparse();
+}
+
 void push_symbol_table(char* name) {
-    symbol_table_t* new_symbol_table = (symbol_table_t*) malloc(sizeof(symbol_table_t));
+    symbol_table_t *new_symbol_table = (symbol_table_t *)malloc(sizeof(symbol_table_t));
     new_symbol_table->symbols = NULL;
     new_symbol_table->next = NULL;
 
-    escope_t* new_escope = (escope_t*) malloc(sizeof(escope_t));
+    escope_t *new_escope = (escope_t *)malloc(sizeof(escope_t));
     new_escope->symbol_table = new_symbol_table;
     new_escope->next = escope_stack;
     new_escope->name = strdup(name);
 
     escope_stack = new_escope;
+
+    // Copiar os símbolos do escopo anterior para o novo escopo
+    if (escope_stack->next != NULL) {
+        symbol_table_t *prev_symbol_table = escope_stack->next->symbol_table;
+        node_t *current_node = prev_symbol_table->symbols;
+        while (current_node != NULL) {
+            if (current_node->type == 0) {
+                insertint(escope_stack->symbol_table, current_node->id, current_node->int_val);
+            } else {
+                insertstr(escope_stack->symbol_table, current_node->id, current_node->str_val);
+            }
+            current_node = current_node->next;
+        }
+    }
 }
 
 void pop_symbol_table(char* name) {
-    escope_t* old_escope = escope_stack;
-    escope_stack = escope_stack->next;
-
-    // Free the old escope's symbol table
-    node_t* current = old_escope->symbol_table->symbols;
-    while (current != NULL) {
-        node_t* temp = current;
-        current = current->next;
-        free(temp->str_val);
-        free(temp);
+    if (escope_stack != NULL) {
+        escope_t *top = escope_stack;
+        if (strcmp(top->name, name) == 0) {
+            escope_stack = top->next;
+            free(top->symbol_table);
+            free(top->name);
+            free(top);
+        } else {
+            printf("Erro: nome do escopo não corresponde\n");
+        }
+    } else {
+        printf("Erro: stack de escopo vazia\n");
     }
-
-    free(old_escope->symbol_table);
-    free(old_escope->name);
-    free(old_escope);
 }
 
 node_t* get_node(symbol_table_t *symbol_table, char *lex) {
-    node_t* current = symbol_table->symbols;
-    while (current != NULL) {
-        if (strcmp(current->id, lex) == 0) {
-            return current;
+    node_t *current_node = symbol_table->symbols;
+    while (current_node != NULL) {
+        if (strcmp(current_node->id, lex) == 0) {
+            return current_node;
         }
-        current = current->next;
+        current_node = current_node->next;
     }
     return NULL;
 }
 
 node_t* get_node_from_stack(char *lex) {
-    escope_t* current_escope = escope_stack;
+    escope_t *current_escope = escope_stack;
     while (current_escope != NULL) {
-        node_t* found_node = get_node(current_escope->symbol_table, lex);
+        node_t *found_node = get_node(current_escope->symbol_table, lex);
         if (found_node != NULL) {
             return found_node;
         }
@@ -365,77 +366,43 @@ node_t* get_node_from_stack(char *lex) {
 }
 
 node_t* insertint(symbol_table_t *symbol_table, char *lex, int int_val) {
-    node_t* existing_node = get_node(symbol_table, lex);
-    if (existing_node != NULL) {
-        existing_node->int_val = int_val;
-        existing_node->type = 0;
-        return existing_node;
-    }
-
-    node_t* new_node = (node_t*) malloc(sizeof(node_t));
+    node_t *new_node = (node_t *)malloc(sizeof(node_t));
     strcpy(new_node->id, lex);
     new_node->int_val = int_val;
-    new_node->str_val = NULL;
-    new_node->next = symbol_table->symbols;
     new_node->type = 0;
+    new_node->next = symbol_table->symbols;
     symbol_table->symbols = new_node;
-
     return new_node;
 }
 
 node_t* insertstr(symbol_table_t *symbol_table, char *lex, char *value) {
-    node_t* existing_node = get_node(symbol_table, lex);
-    if (existing_node != NULL) {
-        free(existing_node->str_val);
-        existing_node->str_val = strdup(value);
-        existing_node->type = 1;
-        return existing_node;
-    }
-
-    node_t* new_node = (node_t*) malloc(sizeof(node_t));
+    node_t *new_node = (node_t *)malloc(sizeof(node_t));
     strcpy(new_node->id, lex);
-    new_node->int_val = 0;
     new_node->str_val = strdup(value);
-    new_node->next = symbol_table->symbols;
     new_node->type = 1;
+    new_node->next = symbol_table->symbols;
     symbol_table->symbols = new_node;
-
     return new_node;
 }
 
 node_t* delete_node(symbol_table_t *symbol_table, char *lex) {
-    node_t *current = symbol_table->symbols;
-    node_t *previous = NULL;
-
-    while (current != NULL && strcmp(current->id, lex) != 0) {
-        previous = current;
-        current = current->next;
+    node_t *current_node = symbol_table->symbols;
+    node_t *previous_node = NULL;
+    while (current_node != NULL) {
+        if (strcmp(current_node->id, lex) == 0) {
+            if (previous_node == NULL) {
+                symbol_table->symbols = current_node->next;
+            } else {
+                previous_node->next = current_node->next;
+            }
+            return current_node;
+        }
+        previous_node = current_node;
+        current_node = current_node->next;
     }
-
-    if (current == NULL) {
-        return NULL; // Node not found
-    }
-
-    if (previous == NULL) {
-        symbol_table->symbols = current->next;
-    } else {
-        previous->next = current->next;
-    }
-
-    free(current->str_val);
-    free(current);
-    return current;
-}
-
-int main(int argc, char **argv) {
-    return yyparse();
+    return NULL;
 }
 
 void yyerror(char* s) {
-    fprintf(stderr, "erro: %s\n", s);
-    // Retorna para continuar a execução
-}
-
-int yywrap() {
-    return 1;
+    fprintf(stderr, "Error: %s\n", s);
 }
