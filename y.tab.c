@@ -106,9 +106,10 @@ void yyerror(char* s);
 #include <stdlib.h>
 #include <string.h>
 
-// Declaração da variável yyin para o Flex/Bison
+// Declaração de variáveis externas
 extern FILE *yyin;
 
+// Estrutura para representar um nó na tabela de símbolos
 typedef struct node {
     char id[10];
     int int_val;
@@ -117,19 +118,23 @@ typedef struct node {
     int type; // 0 para int, 1 para string
 } node_t;
 
+// Estrutura para representar a tabela de símbolos
 typedef struct symbol_table {
     node_t *symbols;
     struct symbol_table *next;
 } symbol_table_t;
 
+// Estrutura para representar um escopo
 typedef struct escope {
     symbol_table_t* symbol_table;
     struct escope* next;
     char* name;
 } escope_t;
 
+// Pilha de escopos
 escope_t *escope_stack = NULL;
 
+// Funções para manipular a pilha de escopos e a tabela de símbolos
 void push_symbol_table(char* name);
 void pop_symbol_table(char* name);
 node_t* get_node(symbol_table_t *symbol_table, char *lex);
@@ -138,6 +143,7 @@ node_t* insertint(symbol_table_t *symbol_table, char *lex, int int_val);
 node_t* insertstr(symbol_table_t *symbol_table, char *lex, char *value);
 node_t* delete_node(symbol_table_t *symbol_table, char *lex);
 
+// Função para remover aspas de uma string
 char* remove_quotes(char* str) {
     char* new_str = strdup(str);
     size_t len = strlen(new_str);
@@ -148,7 +154,7 @@ char* remove_quotes(char* str) {
     return new_str;
 }
 
-#line 51 "parser.y"
+#line 57 "parser.y"
 typedef union {
     int number;
     char *string;
@@ -527,7 +533,7 @@ YY_parse_CONSTRUCTOR_CODE;
  #line 352 "/usr/share/bison++/bison.cc"
 
 
-#define	YYFINAL		55
+#define	YYFINAL		54
 #define	YYFLAG		-32768
 #define	YYNTBASE	19
 
@@ -568,7 +574,7 @@ static const char yytranslate[] = {     0,
 static const short yyprhs[] = {     0,
      0,     3,     4,     7,    10,    12,    14,    16,    18,    20,
     24,    28,    30,    34,    40,    44,    48,    54,    62,    68,
-    73,    80,    87,    94,   103,   107
+    73,    80,    87,    94,    99,   103
 };
 
 static const short yyrhs[] = {    19,
@@ -581,17 +587,17 @@ static const short yyrhs[] = {    19,
      0,     4,     7,     6,    18,    23,     0,     4,     7,     3,
      9,     0,     4,     7,     3,     8,     3,     9,     0,     4,
      7,     4,     8,     4,     9,     0,     4,     7,     4,     8,
-     3,     9,     0,     4,     7,     4,     8,     4,     8,     4,
-     9,     0,    10,     4,     9,     0,    11,     4,     9,     0
+     3,     9,     0,     4,     7,     6,     9,     0,    10,     4,
+     9,     0,    11,     4,     9,     0
 };
 
 #endif
 
 #if (YY_parse_DEBUG != 0) || defined(YY_parse_ERROR_VERBOSE) 
 static const short yyrline[] = { 0,
-    62,    64,    67,    72,    76,    79,    81,    82,    83,    86,
-    90,    95,   100,   104,   109,   115,   119,   123,   128,   136,
-   149,   162,   203,   226,   271,   286
+    69,    71,    75,    81,    86,    90,    92,    93,    94,    98,
+   102,   108,   114,   119,   125,   132,   137,   142,   148,   158,
+   172,   186,   230,   254,   273,   290
 };
 
 static const char * const yytname[] = {   "$","error","$illegal.","NUMBER","IDENT",
@@ -610,16 +616,16 @@ static const short yyr1[] = {     0,
 static const short yyr2[] = {     0,
      2,     0,     2,     2,     1,     1,     1,     1,     1,     3,
      3,     1,     3,     5,     3,     3,     5,     7,     5,     4,
-     6,     6,     6,     8,     3,     3
+     6,     6,     6,     4,     3,     3
 };
 
 static const short yydefact[] = {     2,
      0,     0,     0,     0,     0,     0,     0,     0,     1,     5,
      6,     7,     8,     9,     0,     0,     0,     3,     4,    12,
-     0,     0,     0,     0,    25,    26,     0,     0,    10,    11,
-     0,    20,     0,    13,    15,    16,     0,     0,     0,     0,
-     0,     0,    21,    23,     0,    22,    14,    17,    19,     0,
-     0,    24,    18,     0,     0
+     0,     0,     0,     0,     0,    25,    26,     0,     0,    10,
+    11,     0,    20,     0,    24,    13,    15,    16,     0,     0,
+     0,     0,     0,     0,    21,    23,    22,    14,    17,    19,
+     0,    18,     0,     0
 };
 
 static const short yydefgoto[] = {     1,
@@ -627,12 +633,12 @@ static const short yydefgoto[] = {     1,
 };
 
 static const short yypact[] = {-32768,
-     1,    12,    21,    22,    23,    24,    26,    26,-32768,-32768,
--32768,-32768,-32768,-32768,     4,    18,    27,-32768,-32768,    -5,
-    28,    29,    13,    31,-32768,-32768,     0,    26,-32768,-32768,
-    32,-32768,     6,    -4,    14,-32768,    33,    35,    15,    37,
-    26,    26,-32768,-32768,    41,-32768,    30,-32768,-32768,    38,
-    26,-32768,-32768,    46,-32768
+     1,    13,    -1,     4,     5,    23,    25,    25,-32768,-32768,
+-32768,-32768,-32768,-32768,     3,    18,    21,-32768,-32768,    -5,
+    24,    28,    15,    26,    29,-32768,-32768,    16,    25,-32768,
+-32768,    36,-32768,    22,-32768,    -4,    14,-32768,    31,    32,
+    33,    41,    25,    25,-32768,-32768,-32768,    27,-32768,-32768,
+    25,-32768,    46,-32768
 };
 
 static const short yypgoto[] = {-32768,
@@ -640,23 +646,23 @@ static const short yypgoto[] = {-32768,
 };
 
 
-#define	YYLAST		48
+#define	YYLAST		46
 
 
 static const short yytable[] = {    22,
-    54,    27,    34,    40,     2,    35,    23,    24,    38,    39,
-     3,     4,    28,    41,     5,     6,     7,     8,    15,    36,
-    31,    32,    45,    46,    16,    17,    25,    18,    19,    20,
-     0,    42,    48,    49,    37,    26,    29,    30,    33,    47,
-     0,    43,    53,    44,    50,    55,    52,    51
+    53,    28,    16,    42,     2,    23,    24,    17,    25,    18,
+     3,     4,    29,    43,     5,     6,     7,     8,    36,    15,
+    38,    37,    32,    33,    40,    41,    26,    19,    20,    27,
+     0,    44,    30,    34,    49,    50,    31,    35,    39,    45,
+    46,    47,    52,    48,    51,    54
 };
 
 static const short yycheck[] = {     8,
-     0,     7,     3,     8,     4,     6,     3,     4,     3,     4,
-    10,    11,    18,    18,    14,    15,    16,    17,     7,    28,
-     8,     9,     8,     9,     4,     4,     9,     5,     5,     4,
-    -1,    18,    41,    42,     3,     9,     9,     9,     8,     3,
-    -1,     9,    51,     9,     4,     0,     9,    18
+     0,     7,     4,     8,     4,     3,     4,     4,     6,     5,
+    10,    11,    18,    18,    14,    15,    16,    17,     3,     7,
+    29,     6,     8,     9,     3,     4,     9,     5,     4,     9,
+    -1,    18,     9,     8,    43,    44,     9,     9,     3,     9,
+     9,     9,    51,     3,    18,     0
 };
 
 #line 352 "/usr/share/bison++/bison.cc"
@@ -1153,127 +1159,140 @@ YYLABEL(yyreduce)
   switch (yyn) {
 
 case 3:
-#line 68 "parser.y"
+#line 76 "parser.y"
 {
-        printf("Entering block: %s\n", yyvsp[0].string);
+        // Entrando em um novo bloco
+        //printf("Entering block: %s\n", $2);
         push_symbol_table(yyvsp[0].string);
     ;
     break;}
 case 4:
-#line 72 "parser.y"
+#line 81 "parser.y"
 {
-        printf("Exiting block: %s\n", yyvsp[0].string);
+        // Saindo de um bloco
+        //printf("Exiting block: %s\n", $2);
         pop_symbol_table(yyvsp[0].string);
     ;
     break;}
 case 10:
-#line 87 "parser.y"
+#line 99 "parser.y"
 {
-        // Declaração de múltiplos identificadores
+        // Declaração de múltiplos identificadores do tipo NUMERO
     ;
     break;}
 case 11:
-#line 90 "parser.y"
+#line 102 "parser.y"
 {
-        // Declaração de múltiplos identificadores
+        // Declaração de múltiplos identificadores do tipo CADEIA
     ;
     break;}
 case 12:
-#line 96 "parser.y"
+#line 109 "parser.y"
 {
+        // Inserindo um identificador do tipo NUMERO
         insertint(escope_stack->symbol_table, yyvsp[0].string, 0);
-        printf("Declaration: %s\n", yyvsp[0].string);
+        //printf("Declaration: %s\n", $1);
     ;
     break;}
 case 13:
-#line 100 "parser.y"
+#line 114 "parser.y"
 {
+        // Inserindo um identificador do tipo NUMERO com valor inicial
         insertint(escope_stack->symbol_table, yyvsp[-2].string, yyvsp[0].number);
-        printf("Declaration: %s = %d\n", yyvsp[-2].string, yyvsp[0].number);
+        //printf("Declaration: %s = %d\n", $1, $3);
     ;
     break;}
 case 14:
-#line 104 "parser.y"
+#line 119 "parser.y"
 {
+        // Inserindo um identificador do tipo NUMERO com valor inicial sendo uma soma
         int result = yyvsp[-2].number + yyvsp[0].number;
         insertint(escope_stack->symbol_table, yyvsp[-4].string, result);
-        printf("Declaration: %s = %d\n", yyvsp[-4].string, result);
+        //printf("Declaration: %s = %d\n", $1, result);
     ;
     break;}
 case 15:
-#line 109 "parser.y"
+#line 125 "parser.y"
 {
+        // Inserindo um identificador do tipo CADEIA com valor inicial
         char *str_val = remove_quotes(yyvsp[0].string);
         insertstr(escope_stack->symbol_table, yyvsp[-2].string, str_val);
-        printf("Declaration: %s = \"%s\"\n", yyvsp[-2].string, str_val);
+        //printf("Declaration: %s = \"%s\"\n", $1, str_val);
         free(str_val);
     ;
     break;}
 case 16:
-#line 115 "parser.y"
+#line 132 "parser.y"
 {
+        // Inserindo múltiplos identificadores do tipo NUMERO
         insertint(escope_stack->symbol_table, yyvsp[-2].string, 0);
-        printf("Declaration: %s\n", yyvsp[-2].string);
+        //printf("Declaration: %s\n", $1);
     ;
     break;}
 case 17:
-#line 119 "parser.y"
+#line 137 "parser.y"
 {
+        // Inserindo múltiplos identificadores do tipo NUMERO com valor inicial
         insertint(escope_stack->symbol_table, yyvsp[-4].string, yyvsp[-2].number);
-        printf("Declaration: %s = %d\n", yyvsp[-4].string, yyvsp[-2].number);
+        //printf("Declaration: %s = %d\n", $1, $3);
     ;
     break;}
 case 18:
-#line 123 "parser.y"
+#line 142 "parser.y"
 {
+        // Inserindo múltiplos identificadores do tipo NUMERO com valor inicial sendo uma soma
         int result = yyvsp[-4].number + yyvsp[-2].number;
         insertint(escope_stack->symbol_table, yyvsp[-6].string, result);
-        printf("Declaration: %s = %d\n", yyvsp[-6].string, result);
+        //printf("Declaration: %s = %d\n", $1, result);
     ;
     break;}
 case 19:
-#line 128 "parser.y"
+#line 148 "parser.y"
 {
+        // Inserindo múltiplos identificadores do tipo CADEIA com valor inicial
         char *str_val = remove_quotes(yyvsp[-2].string);
         insertstr(escope_stack->symbol_table, yyvsp[-4].string, str_val);
-        printf("Declaration: %s = \"%s\"\n", yyvsp[-4].string, str_val);
+        //printf("Declaration: %s = \"%s\"\n", $1, str_val);
         free(str_val);
     ;
     break;}
 case 20:
-#line 137 "parser.y"
+#line 159 "parser.y"
 {
+        // Atribuição de um número a um identificador
         node_t* found_node = get_node_from_stack(yyvsp[-3].string);
         if (found_node == NULL) {
             insertint(escope_stack->symbol_table, yyvsp[-3].string, yyvsp[-1].number);
-            printf("Assignment: %s = %d\n", yyvsp[-3].string, yyvsp[-1].number);
+            //printf("Assignment: %s = %d\n", $1, $3);
         } else if (found_node->type == 0) {
             found_node->int_val = yyvsp[-1].number;
-            printf("Assignment: %s = %d\n", yyvsp[-3].string, yyvsp[-1].number);
+            //printf("Assignment: %s = %d\n", $1, $3);
         } else {
             printf("Erro: tipos não compatíveis\n");
         }
     ;
     break;}
 case 21:
-#line 149 "parser.y"
+#line 172 "parser.y"
 {
+        // Atribuição de uma soma a um identificador
         node_t* found_node = get_node_from_stack(yyvsp[-5].string);
         int result = yyvsp[-3].number + yyvsp[-1].number;
         if (found_node == NULL) {
             insertint(escope_stack->symbol_table, yyvsp[-5].string, result);
-            printf("Assignment: %s = %d\n", yyvsp[-5].string, result);
+            //printf("Assignment: %s = %d\n", $1, result);
         } else if (found_node->type == 0) {
             found_node->int_val = result;
-            printf("Assignment: %s = %d\n", yyvsp[-5].string, result);
+            //printf("Assignment: %s = %d\n", $1, result);
         } else {
             printf("Erro: tipos não compatíveis\n");
         }
     ;
     break;}
 case 22:
-#line 162 "parser.y"
+#line 186 "parser.y"
 {
+        // Atribuição da soma de dois identificadores a um terceiro identificador
         node_t* found_node1 = get_node_from_stack(yyvsp[-3].string);
         node_t* found_node2 = get_node_from_stack(yyvsp[-1].string);
         node_t* found_node_dest = get_node_from_stack(yyvsp[-5].string);
@@ -1281,28 +1300,30 @@ case 22:
         if (found_node1 && found_node2) {
             if (found_node1->type == found_node2->type) {
                 if (found_node1->type == 1) {
-                    char *result = (char *)malloc(strlen(found_node1->str_val) + strlen(found_node2->str_val) + 1); // +1 para terminador nulo
+                    // Concatenação de strings
+                    char *result = (char *)malloc(strlen(found_node1->str_val) + strlen(found_node2->str_val) + 1);
                     strcpy(result, found_node1->str_val);
                     strcat(result, found_node2->str_val);
                     if (found_node_dest == NULL) {
                         insertstr(escope_stack->symbol_table, yyvsp[-5].string, result);
-                        printf("Assignment: %s = \"%s\"\n", yyvsp[-5].string, result);
+                        //printf("Assignment: %s = \"%s\"\n", $1, result);
                     } else if (found_node_dest->type == 1) {
                         free(found_node_dest->str_val);
                         found_node_dest->str_val = result;
-                        printf("Assignment: %s = \"%s\"\n", yyvsp[-5].string, result);
+                       // printf("Assignment: %s = \"%s\"\n", $1, result);
                     } else {
                         printf("Erro: tipos não compatíveis\n");
                         free(result);
                     }
                 } else {
+                    // Soma de inteiros
                     int result = found_node1->int_val + found_node2->int_val;
                     if (found_node_dest == NULL) {
                         insertint(escope_stack->symbol_table, yyvsp[-5].string, result);
-                        printf("Assignment: %s = %d\n", yyvsp[-5].string, result);
+                        //printf("Assignment: %s = %d\n", $1, result);
                     } else if (found_node_dest->type == 0) {
                         found_node_dest->int_val = result;
-                        printf("Assignment: %s = %d\n", yyvsp[-5].string, result);
+                       // printf("Assignment: %s = %d\n", $1, result);
                     } else {
                         printf("Erro: tipos não compatíveis\n");
                     }
@@ -1316,8 +1337,9 @@ case 22:
     ;
     break;}
 case 23:
-#line 203 "parser.y"
+#line 230 "parser.y"
 {
+        // Atribuição da soma de um identificador e um número a um terceiro identificador
         node_t* found_node1 = get_node_from_stack(yyvsp[-3].string);
         node_t* found_node_dest = get_node_from_stack(yyvsp[-5].string);
 
@@ -1326,10 +1348,10 @@ case 23:
                 int result = found_node1->int_val + yyvsp[-1].number;
                 if (found_node_dest == NULL) {
                     insertint(escope_stack->symbol_table, yyvsp[-5].string, result);
-                    printf("Assignment: %s = %d\n", yyvsp[-5].string, result);
+                    //printf("Assignment: %s = %d\n", $1, result);
                 } else if (found_node_dest->type == 0) {
                     found_node_dest->int_val = result;
-                    printf("Assignment: %s = %d\n", yyvsp[-5].string, result);
+                    //printf("Assignment: %s = %d\n", $1, result);
                 } else {
                     printf("Erro: tipos não compatíveis\n");
                 }
@@ -1342,60 +1364,34 @@ case 23:
     ;
     break;}
 case 24:
-#line 226 "parser.y"
+#line 254 "parser.y"
 {
-        node_t* found_node1 = get_node_from_stack(yyvsp[-5].string);
-        node_t* found_node2 = get_node_from_stack(yyvsp[-3].string);
-        node_t* found_node3 = get_node_from_stack(yyvsp[-1].string);
-        node_t* found_node_dest = get_node_from_stack(yyvsp[-7].string);
-
-        if (found_node1 && found_node2 && found_node3) {
-            if (found_node1->type == found_node2->type && found_node2->type == found_node3->type) {
-                if (found_node1->type == 1) {
-                    char *result = (char *)malloc(strlen(found_node1->str_val) + strlen(found_node2->str_val) + strlen(found_node3->str_val) + 1); // +1 para terminador nulo
-                    strcpy(result, found_node1->str_val);
-                    strcat(result, found_node2->str_val);
-                    strcat(result, found_node3->str_val);
-                    if (found_node_dest == NULL) {
-                        insertstr(escope_stack->symbol_table, yyvsp[-7].string, result);
-                        printf("Assignment: %s = \"%s\"\n", yyvsp[-7].string, result);
-                    } else if (found_node_dest->type == 1) {
-                        free(found_node_dest->str_val);
-                        found_node_dest->str_val = result;
-                        printf("Assignment: %s = \"%s\"\n", yyvsp[-7].string, result);
-                    } else {
-                        printf("Erro: tipos não compatíveis\n");
-                        free(result);
-                    }
-                } else {
-                    int result = found_node1->int_val + found_node2->int_val + found_node3->int_val;
-                    if (found_node_dest == NULL) {
-                        insertint(escope_stack->symbol_table, yyvsp[-7].string, result);
-                        printf("Assignment: %s = %d\n", yyvsp[-7].string, result);
-                    } else if (found_node_dest->type == 0) {
-                        found_node_dest->int_val = result;
-                        printf("Assignment: %s = %d\n", yyvsp[-7].string, result);
-                    } else {
-                        printf("Erro: tipos não compatíveis\n");
-                    }
-                }
-            } else {
-                printf("Erro: tipos não compatíveis\n");
-            }
+        // Atribuição de uma string a um identificador
+        node_t* found_node = get_node_from_stack(yyvsp[-3].string);
+        char *str_val = remove_quotes(yyvsp[-1].string);
+        if (found_node == NULL) {
+            insertstr(escope_stack->symbol_table, yyvsp[-3].string, str_val);
+            //printf("Assignment: %s = \"%s\"\n", $1, str_val);
+        } else if (found_node->type == 1) {
+            free(found_node->str_val);
+            found_node->str_val = str_val;
+            //printf("Assignment: %s = \"%s\"\n", $1, str_val);
         } else {
-            printf("Erro: variável não declarada\n");
+            printf("Erro: tipos não compatíveis\n");
+            free(str_val);
         }
     ;
     break;}
 case 25:
-#line 272 "parser.y"
+#line 274 "parser.y"
 {
+        // Imprimindo o valor de um identificador
         node_t* found_node = get_node_from_stack(yyvsp[-1].string);
         if (found_node) {
             if (found_node->type == 0) {
-                printf("Value of %s: %d\n", yyvsp[-1].string, found_node->int_val);
+                printf("%d\n", found_node->int_val);
             } else {
-                printf("Value of %s: %s\n", yyvsp[-1].string, found_node->str_val);
+                printf("\"%s\"\n", found_node->str_val);
             }
         } else {
             printf("Erro: variável não declarada\n");
@@ -1403,18 +1399,11 @@ case 25:
     ;
     break;}
 case 26:
-#line 287 "parser.y"
+#line 291 "parser.y"
 {
-        node_t* node = delete_node(escope_stack->symbol_table, yyvsp[-1].string);
-        if (node) {
-            printf("Deleted %s\n", yyvsp[-1].string);
-            if (node->type == 1) {
-                free(node->str_val);
-            }
-            free(node);
-        } else {
-            printf("Erro: variável não declarada\n");
-        }
+        // Removendo um identificador da tabela de símbolos
+        delete_node(escope_stack->symbol_table, yyvsp[-1].string);
+        printf("Deleted: %s\n", yyvsp[-1].string);
     ;
     break;}
 }
@@ -1621,15 +1610,15 @@ YYLABEL(yyerrhandle)
 /* END */
 
  #line 1038 "/usr/share/bison++/bison.cc"
-#line 301 "parser.y"
+#line 298 "parser.y"
 
 
-int main(int argc, char **argv) {
-    ++argv, --argc;
-    if (argc > 0) {
-        FILE *file = fopen(argv[0], "r");
+// Função principal
+int main(int argc, char *argv[]) {
+    if (argc > 1) {
+        FILE *file = fopen(argv[1], "r");
         if (!file) {
-            fprintf(stderr, "Could not open %s\n", argv[0]);
+            fprintf(stderr, "Could not open %s\n", argv[1]);
             return 1;
         }
         yyin = file;
@@ -1637,43 +1626,49 @@ int main(int argc, char **argv) {
     return yyparse();
 }
 
-void yyerror(char* s) {
-    fprintf(stderr, "Error: %s\n", s);
-}
+// Funções auxiliares
 
+// Empilhar uma nova tabela de símbolos
 void push_symbol_table(char* name) {
-    escope_t* new_escope = (escope_t*)malloc(sizeof(escope_t));
-    new_escope->symbol_table = (symbol_table_t*)malloc(sizeof(symbol_table_t));
-    new_escope->symbol_table->symbols = NULL;
-    new_escope->symbol_table->next = NULL;
-    new_escope->name = strdup(name);
+    escope_t *new_escope = (escope_t *)malloc(sizeof(escope_t));
+    symbol_table_t *new_symbol_table = (symbol_table_t *)malloc(sizeof(symbol_table_t));
+    new_symbol_table->symbols = NULL;
+    new_symbol_table->next = NULL;
+
+    new_escope->symbol_table = new_symbol_table;
     new_escope->next = escope_stack;
+    new_escope->name = strdup(name);
+
     escope_stack = new_escope;
 }
 
+// Desempilhar a tabela de símbolos
 void pop_symbol_table(char* name) {
-    if (escope_stack != NULL) {
-        escope_t* top = escope_stack;
-        escope_stack = escope_stack->next;
+    if (escope_stack == NULL) return;
 
-        // Libera a tabela de símbolos
-        node_t* current = top->symbol_table->symbols;
-        while (current != NULL) {
-            node_t* temp = current;
-            current = current->next;
-            if (temp->type == 1) {
-                free(temp->str_val);
-            }
-            free(temp);
+    escope_t *temp = escope_stack;
+    escope_stack = escope_stack->next;
+
+    free(temp->name);
+
+    // Liberar todos os nós da tabela de símbolos
+    node_t *current = temp->symbol_table->symbols;
+    while (current != NULL) {
+        node_t *next = current->next;
+        if (current->type == 1) {
+            free(current->str_val);
         }
-        free(top->symbol_table);
-        free(top->name);
-        free(top);
+        free(current);
+        current = next;
     }
+
+    free(temp->symbol_table);
+    free(temp);
 }
 
+// Buscar um nó na tabela de símbolos
 node_t* get_node(symbol_table_t *symbol_table, char *lex) {
-    node_t* current = symbol_table->symbols;
+    node_t *current = symbol_table->symbols;
     while (current != NULL) {
         if (strcmp(current->id, lex) == 0) {
             return current;
@@ -1683,59 +1678,63 @@ node_t* get_node(symbol_table_t *symbol_table, char *lex) {
     return NULL;
 }
 
+// Buscar um nó na pilha de escopos
 node_t* get_node_from_stack(char *lex) {
-    escope_t* current_scope = escope_stack;
-    while (current_scope != NULL) {
-        node_t* node = get_node(current_scope->symbol_table, lex);
-        if (node != NULL) {
-            return node;
+    escope_t *current_escope = escope_stack;
+    while (current_escope != NULL) {
+        node_t *found_node = get_node(current_escope->symbol_table, lex);
+        if (found_node != NULL) {
+            return found_node;
         }
-        current_scope = current_scope->next;
+        current_escope = current_escope->next;
     }
     return NULL;
 }
 
+// Inserir um nó do tipo int na tabela de símbolos
 node_t* insertint(symbol_table_t *symbol_table, char *lex, int int_val) {
-    node_t* new_node = (node_t*)malloc(sizeof(node_t));
+    node_t *new_node = (node_t *)malloc(sizeof(node_t));
     strcpy(new_node->id, lex);
     new_node->int_val = int_val;
     new_node->str_val = NULL;
-    new_node->next = symbol_table->symbols;
     new_node->type = 0;
+    new_node->next = symbol_table->symbols;
     symbol_table->symbols = new_node;
     return new_node;
 }
 
+// Inserir um nó do tipo string na tabela de símbolos
 node_t* insertstr(symbol_table_t *symbol_table, char *lex, char *value) {
-    node_t* new_node = (node_t*)malloc(sizeof(node_t));
+    node_t *new_node = (node_t *)malloc(sizeof(node_t));
     strcpy(new_node->id, lex);
     new_node->int_val = 0;
     new_node->str_val = strdup(value);
-    new_node->next = symbol_table->symbols;
     new_node->type = 1;
+    new_node->next = symbol_table->symbols;
     symbol_table->symbols = new_node;
     return new_node;
 }
 
+// Remover um nó da tabela de símbolos
 node_t* delete_node(symbol_table_t *symbol_table, char *lex) {
-    node_t *current = symbol_table->symbols;
-    node_t *prev = NULL;
+    node_t **indirect = &symbol_table->symbols;
 
-    while (current != NULL && strcmp(current->id, lex) != 0) {
-        prev = current;
-        current = current->next;
+    while (*indirect != NULL) {
+        if (strcmp((*indirect)->id, lex) == 0) {
+            node_t *temp = *indirect;
+            *indirect = temp->next;
+
+            if (temp->type == 1) {
+                free(temp->str_val);
+            }
+            free(temp);
+            return NULL;
+        }
+        indirect = &(*indirect)->next;
     }
+    return NULL;
+}
 
-    if (current == NULL) {
-        return NULL; // Node not found
-    }
-
-    if (prev == NULL) {
-        // Node is the head of the list
-        symbol_table->symbols = current->next;
-    } else {
-        prev->next = current->next;
-    }
-
-    return current;
+void yyerror(char* s) {
+    fprintf(stderr, "Error: %s\n", s);
 }

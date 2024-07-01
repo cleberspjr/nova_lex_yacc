@@ -1,0 +1,13 @@
+50
+10
+Erro: tipos não compatíveis
+"Ola mundo"
+50
+45
+"Compiladores eh massa"
+Erro: tipos não compatíveis
+"Bloco 2"
+45
+55
+Erro: variável não declarada
+10
